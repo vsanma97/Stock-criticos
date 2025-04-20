@@ -1,0 +1,70 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Ficha de Producto - Galilea</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 2em;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+        .logo {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 120px;
+        }
+        .card {
+            background: white;
+            padding: 2em;
+            border-radius: 12px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            max-width: 500px;
+            margin: auto;
+        }
+        h2 {
+            color: #c8102e;
+        }
+    </style>
+</head>
+<body>
+    <img src="constructora_galilea_sa_logo.jpg" alt="Galilea Logo" class="logo">
+    <div class="card">
+        <h2>Ficha de Producto</h2>
+        <div id="contenido">Cargando datos...</div>
+    </div>
+
+    <script>
+        function getQueryParam(param) {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(param);
+        }
+
+        async function cargarDatos() {
+            const codigo = getQueryParam("codigo");
+            const response = await fetch("productos_galileacoronel.csv");
+            const data = await response.text();
+            const filas = data.split("\n").slice(1); // omitir encabezado
+
+            for (const fila of filas) {
+                const [A, B, C, D, E] = fila.split(",");
+                if (A === codigo) {
+                    document.getElementById("contenido").innerHTML = `
+                        <p><strong>Descripción:</strong> ${B}</p>
+                        <p><strong>Stock mínimo:</strong> ${C}</p>
+                        <p><strong>Stock actual:</strong> ${D}</p>
+                        <p><strong>Estado:</strong> ${E}</p>
+                    `;
+                    return;
+                }
+            }
+            document.getElementById("contenido").innerText = "Producto no encontrado.";
+        }
+
+        cargarDatos();
+    </script>
+</body>
+</html>
