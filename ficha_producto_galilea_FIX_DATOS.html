@@ -1,0 +1,84 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Ficha de Producto - Galilea</title>
+  <script src="https://cdn.jsdelivr.net/npm/papaparse@5.3.2/papaparse.min.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 2em;
+      background-color: #f4f4f4;
+      color: #333;
+    }
+    .card {
+      background: white;
+      padding: 2em;
+      border-radius: 12px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      max-width: 600px;
+      margin: auto;
+    }
+    h2 {
+      color: #c8102e;
+    }
+    .row {
+      margin-bottom: 0.5em;
+    }
+    .label {
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h2>Ficha de Producto</h2>
+    <div id="contenido">Cargando datos...</div>
+  </div>
+
+  <script>
+    function getQueryParam(param) {
+      const urlParams = new URLSearchParams(window.location.search);
+      return urlParams.get(param);
+    }
+
+    function cargarDatos() {
+      const codigoBuscado = getQueryParam("codigo");
+
+      Papa.parse("BD_Coronel.csv", {
+        download: true,
+        header: true,
+        delimiter: ";",
+        complete: function(results) {
+          const datos = results.data;
+          const producto = datos.find(row =>
+            row.Codigo === codigoBuscado ||
+            row.Codigo === parseInt(codigoBuscado).toString()
+          );
+
+          if (producto) {
+            document.getElementById("contenido").innerHTML = `
+              <div class="row"><span class="label">Código:</span> ${producto["Codigo"]}</div>
+              <div class="row"><span class="label">Descripción:</span> ${producto["Descripcion"]}</div>
+              <div class="row"><span class="label">Stock Mínimo:</span> ${producto["Stock Minimo"]}</div>
+              <div class="row"><span class="label">Stock:</span> ${producto["Q Stock"]}</div>
+              <div class="row"><span class="label">Estado:</span> ${producto["Estado"]}</div>
+              <div class="row"><span class="label">Acción propuesta:</span> ${producto["Acción propuesta2"]}</div>
+              <div class="row"><span class="label">Cantidad:</span> ${producto["Cant prop"]}</div>
+              <div class="row"><span class="label">Q requerida:</span> ${producto["Q pptada etapa"]}</div>
+              <div class="row"><span class="label">Q comprada:</span> ${producto["Q comprada"]}</div>
+              <div class="row"><span class="label">Q entregada:</span> ${producto["Q entregada"]}</div>
+              <div class="row"><span class="label">Qprom semana:</span> ${producto["Qprom semana"]}</div>
+            `;
+          } else {
+            document.getElementById("contenido").innerText = "Producto no encontrado.";
+          }
+        }
+      });
+    }
+
+    cargarDatos();
+  </script>
+</body>
+</html>
