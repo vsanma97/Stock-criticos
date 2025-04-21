@@ -1,0 +1,4 @@
+Codigo;Descripcion;Stock Minimo;Stock;Estado;Acción propuesta;Cantidad;Centro;Obra;Q requerida;Q comprada;Q entregada;Qprom semana
+1194652;ACRIZINC NEGRO 1 GAL;2.5;0;STOCK BAJO NIVEL CRITICO;Recuperar;2;C001;Obra Norte;15;8;6;4
+1269909;ADHESIVO AC EN PASTA 25 KG;7.888;24;STOCK OK;;0;C002;Obra Centro;20;20;20;18
+1177641;"BROCHA 2"" 1 UN";15.0;0;STOCK BAJO NIVEL CRITICO;Recuperar;30;C003;Obra Sur;30;25;20;19
