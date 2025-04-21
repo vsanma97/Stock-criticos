@@ -44,7 +44,7 @@
 
     async function cargarDatos() {
       const codigo = getQueryParam("codigo");
-      const response = await fetch("BD_Coronel_CORREGIDO.csv");
+      const response = await fetch("BD Coronel.csv");
       const data = await response.text();
       const filas = data.split("\n").slice(1);
 
